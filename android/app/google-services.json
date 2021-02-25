@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "358788599291",
+    "project_id": "tul-shopping-cart",
+    "storage_bucket": "tul-shopping-cart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358788599291:android:dd9c0903b90663fb120f5e",
+        "android_client_info": {
+          "package_name": "com.example.shopping_cart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358788599291-m4jk5k8at4j847dh2vdmbpu4jntdso8o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shopping_cart",
+            "certificate_hash": "48af7b9cd6d60bcb0a2ae2da42a65e04e9c606c8"
+          }
+        },
+        {
+          "client_id": "358788599291-mal73o41m6kjecienummtl3vbl2vhfj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBImL4krV2j_-_7FWlLOv9Gd1f6cHg6fgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358788599291-mal73o41m6kjecienummtl3vbl2vhfj6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
