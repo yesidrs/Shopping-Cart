@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shopping_cart/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,16 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: 'Shopping Cart',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Text('Shopping Cart App')
-        ),
-      ),
+      initialRoute: 'home',
+      routes: getRoutes()
     );
   }
 }
