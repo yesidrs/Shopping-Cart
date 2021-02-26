@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_cart/bloc/products/products_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
-import 'package:shopping_cart/services/firestore_instance_api.dart';
+import 'package:shopping_cart/services/cloud_firestore_api.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,31 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Products> newProduct = [
-      Products(
-        description: 'Hamburguesa doble con triple queso',
-        img:
-            'https://www.revistalabarra.com/wp-content/uploads/2019/04/burguer-master-2019-1500x800.jpg',
-        name: 'Hamburguesa doble',
-        sku: '12344',
-      ),
-      Products(
-        description: 'Hamburguesa doble con triple Tocineta',
-        img:
-            'https://www.revistalabarra.com/wp-content/uploads/2019/04/burguer-master-2019-1500x800.jpg',
-        name: 'Hamburguesa Tocineton',
-        sku: '200',
-      ),
-      Products(
-        description: 'Hamburguesa con carne vegetariana',
-        img:
-            'https://www.revistalabarra.com/wp-content/uploads/2019/04/burguer-master-2019-1500x800.jpg',
-        name: 'Hamburguesa Vegetariana',
-        sku: '300',
-      ),
-    ];
-
-    BlocProvider.of<ProductsBloc>(context).add(GetProducts(newProduct));
+    BlocProvider.of<ProductsBloc>(context, listen: true).add(GetProducts(db.products));
 
     return Scaffold(
       appBar: _customAppBar(),
@@ -54,7 +30,6 @@ class _HomePageState extends State<HomePage> {
           return state.isProducts
               ? ProductsList(state.products)
               : Center(child: CircularProgressIndicator());
-          //: Center(child: Text('No Hay Productos'));
         },
       ),
     );
