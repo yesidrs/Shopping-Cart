@@ -4,7 +4,7 @@ class ProductsState {
   final bool isProducts;
   final List<Products> products;
 
-  ProductsState({List<Products> product})
-      : products = product ?? null,
-        isProducts = (product != null) ? true : false;
+  ProductsState({List<Products> productList})
+      : products = productList ?? null,
+        isProducts = (productList != null) ? true : false;
 }

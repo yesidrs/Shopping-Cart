@@ -5,15 +5,22 @@ class DB {
   final firestore = FirebaseFirestore.instance;
 
   List<Products> products;
+  List<Products> cartProducts;
 
-
+  // Home list products
   void getProducts() async {
     final snapshot = await firestore.collection('products').get();
     products = snapshot.docs.map((item) => Products.fromMap(item)).toList();
   }
 
-  void addProducts(Products product) async {
-    final products = firestore
+  // Cart CRUD
+  void getCartProducts() async {
+    final snapshot = await firestore.collection('product_carts').get();
+    cartProducts = snapshot.docs.map((item) => Products.fromMap(item)).toList();
+  }
+
+  void addCartProducts(Products product) async {
+    final products = await firestore
         .collection('product_carts')
         .add(product.toJson())
         .then((value) => print('Product cart added'))

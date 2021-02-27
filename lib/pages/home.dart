@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_cart/bloc/products/products_bloc.dart';
-import 'package:shopping_cart/models/products.dart';
 import 'package:shopping_cart/services/cloud_firestore_api.dart';
-import 'package:shopping_cart/widgets/card.dart';
+import 'package:shopping_cart/widgets/product_lists.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final db = new DB();
 
   @override
   void initState() {
@@ -54,7 +52,6 @@ class _HomePageState extends State<HomePage> {
             icon:
                 FaIcon(FontAwesomeIcons.shoppingCart, color: Colors.redAccent),
             onPressed: () => {
-              //TODO: add cartlist
               Navigator.pushNamed(context, 'cart')
             },
           ),
@@ -62,22 +59,4 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-}
-
-class ProductsList extends StatelessWidget {
-  final List<Products> products;
-
-  const ProductsList(this.products);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: products.length,
-        itemBuilder: (_, index) => CustomCard(products: products, index: index),
-      ),
-    );
-  } 
 }

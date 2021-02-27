@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_cart/bloc/products/products_bloc.dart';
 import 'package:shopping_cart/routes/routes.dart';
+import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
+import 'package:shopping_cart/bloc/products/products_bloc.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => new ProductsBloc(),
-        ),
+        BlocProvider(create: (_) => new ProductsBloc()),
+        BlocProvider(create: (_) => new CartBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

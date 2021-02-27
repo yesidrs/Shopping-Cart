@@ -12,7 +12,7 @@ class ProductsBloc extends Bloc<ProductsEvents, ProductsState> {
   Stream<ProductsState> mapEventToState(ProductsEvents event) async* {
 
     if (event is GetProducts) {
-      yield ProductsState(product: event.products);
+      yield ProductsState(productList: event.products);
     }
   }
 }
