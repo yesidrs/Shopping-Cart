@@ -14,14 +14,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: ( _ ) => new ProductsBloc())
-        ],
+      providers: [
+        BlocProvider(
+          create: (_) => new ProductsBloc(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Shopping Cart',
         initialRoute: 'home',
-        routes: getRoutes()
+        routes: getRoutes(),
+        theme: ThemeData(
+          pageTransitionsTheme: PageTransitionsTheme(builders: {
+            TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          }),
+        ),
       ),
     );
   }
