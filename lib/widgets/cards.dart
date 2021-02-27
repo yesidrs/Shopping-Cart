@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
 import 'package:shopping_cart/services/cloud_firestore_api.dart';
 
@@ -55,10 +57,7 @@ class CustomCard extends StatelessWidget {
               ),
               IconButton(
                 icon: FaIcon(FontAwesomeIcons.plus, color: Colors.redAccent),
-                onPressed: () => {
-                  //TODO: Add Product to Cart
-                  db.addCartProducts(products[index])
-                },
+                onPressed: () => {db.addCartProducts(products[index])},
               )
             ],
           ),
@@ -120,22 +119,32 @@ class CustomCartCard extends StatelessWidget {
                 ),
               ),
               //TODO: Add CRUD buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Column(
                 children: [
-                  IconButton(
-                    icon: FaIcon(FontAwesomeIcons.minus),
-                    color: Colors.redAccent,
-                    iconSize: 15.0,
-                    onPressed: () {},
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                        icon: FaIcon(FontAwesomeIcons.minus),
+                        color: Colors.redAccent,
+                        iconSize: 15.0,
+                        onPressed: () {},
+                      ),
+                      Text('1'),
+                      IconButton(
+                        icon: FaIcon(FontAwesomeIcons.plus),
+                        color: Colors.redAccent,
+                        iconSize: 15.0,
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                  Text('1'),
-                  IconButton(
-                    icon: FaIcon(FontAwesomeIcons.plus),
-                    color: Colors.redAccent,
-                    iconSize: 15.0,
-                    onPressed: () {},
-                  ),
+                  RaisedButton(
+                    child: Text('Remover'),
+                    onPressed: () {
+                      db.deleteCartProduct(products[index].id);
+                    },
+                  )
                 ],
               ),
             ],

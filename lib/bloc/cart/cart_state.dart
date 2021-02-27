@@ -9,6 +9,6 @@ class CartState {
     bool pending = true,
     List<Products> productList,
   })  : isPending = pending,
-        cartProducts = productList,
+        cartProducts = (productList == null) ? [] : productList,
         isCartProducts = (productList != null) ? true : false;
 }

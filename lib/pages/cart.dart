@@ -37,7 +37,8 @@ class _CartPageState extends State<CartPage> {
                 ? Center(child: Text('Todavia no ha agregado productos'))
                 : (state.isPending && state.isCartProducts)
                     ? ProductsCardList(state.cartProducts)
-                    : Center(child: Text('Complete'));
+                    //TODO: Show Order
+                    : Center(child: Text('Show Order'));
           },
         ));
   }
