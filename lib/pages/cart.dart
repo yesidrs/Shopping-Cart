@@ -33,7 +33,7 @@ class _CartPageState extends State<CartPage> {
         ),
         body: BlocBuilder<CartBloc, CartState>(
           builder: (_, state) {
-            return (state.isPending && !state.isCartProducts)
+            return (state.isPending && state.cartProducts.length == 0)
                 ? Center(child: Text('Todavia no ha agregado productos'))
                 : (state.isPending && state.isCartProducts)
                     ? ProductsCardList(state.cartProducts)

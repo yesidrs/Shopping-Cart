@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
 import 'package:shopping_cart/services/cloud_firestore_api.dart';
 
@@ -118,7 +116,6 @@ class CustomCartCard extends StatelessWidget {
                   ],
                 ),
               ),
-              //TODO: Add CRUD buttons
               Column(
                 children: [
                   Row(
@@ -128,14 +125,24 @@ class CustomCartCard extends StatelessWidget {
                         icon: FaIcon(FontAwesomeIcons.minus),
                         color: Colors.redAccent,
                         iconSize: 15.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          if (products[index].quantity <= 1) {
+                            db.deleteCartProduct(products[index].id);
+                          } else {
+                            int _quantity = products[index].quantity - 1;
+                            db.updateQuantity(products[index].id, _quantity);
+                          }
+                        },
                       ),
-                      Text('1'),
+                      Text('${products[index].quantity}'),
                       IconButton(
                         icon: FaIcon(FontAwesomeIcons.plus),
                         color: Colors.redAccent,
                         iconSize: 15.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          int _quantity = products[index].quantity + 1;
+                          db.updateQuantity(products[index].id, _quantity);
+                        },
                       ),
                     ],
                   ),

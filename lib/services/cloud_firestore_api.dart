@@ -52,6 +52,16 @@ class DB {
         .catchError((err) => print('Failed to remove product: $err'));
   }
 
+  void updateQuantity(String productId, int quantity) async {
+    await firestore
+        .collection('product_carts')
+        .doc(productId)
+        .update({'quantity': quantity})
+        .then((value) => print('Quantity updated'))
+        .catchError((err) => print('Failed to update quantity: $err'));
+
+  }
+
   void cancel() {
     _streamSubs.cancel();
   }

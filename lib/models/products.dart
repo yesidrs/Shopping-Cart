@@ -5,6 +5,7 @@ class Products {
   final String id;
   final String img;
   final String name;
+  final int quantity;
   final String sku;
 
   Products({
@@ -12,6 +13,7 @@ class Products {
     @required this.id,
     @required this.img,
     @required this.name,
+    @required this.quantity,
     @required this.sku,
   });
 
@@ -21,6 +23,7 @@ class Products {
       id: data['id'],
       img: data['img'],
       name: data['name'],
+      quantity: data['quantity'],
       sku: data['sku'],
   );
 
@@ -28,6 +31,7 @@ class Products {
     'description': description,
     'img': img,
     'name': name,
+    'quantity': quantity,
     'sku': sku,
   };
 
