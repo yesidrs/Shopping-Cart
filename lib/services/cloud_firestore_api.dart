@@ -8,6 +8,7 @@ class DB {
 
   List<Products> products;
   List<Products> cartProducts;
+  List<Products> orderProducts;
   StreamSubscription _streamSubs;
 
   // Home list products
@@ -59,7 +60,37 @@ class DB {
         .update({'quantity': quantity})
         .then((value) => print('Quantity updated'))
         .catchError((err) => print('Failed to update quantity: $err'));
+  }
 
+
+  // Order
+  void getOrderProducts() {
+    _streamSubs =
+        firestore.collection('order').snapshots().listen((onData) {
+      orderProducts = onData.docs.map((item) {
+        final id = item.reference.id;
+        final data = item.data();
+        data['id'] = id;
+        return Products.fromMap(data);
+      }).toList();
+    });
+  }
+
+  void createOrder(Products products) async {
+    await firestore
+        .collection('order')
+        .add(products.toJson())
+        .then((value) => print('order crated'))
+        .catchError((err) => print('Failed to create order: $err'));
+  }
+
+  void deleteOrderProducts(String productId) async {
+    await firestore
+        .collection('order')
+        .doc(productId)
+        .delete()
+        .then((value) => print('Cart Product Deleted'))
+        .catchError((err) => print('Failed to remove product: $err'));
   }
 
   void cancel() {

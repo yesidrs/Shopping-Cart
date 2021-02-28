@@ -146,7 +146,7 @@ class CustomCartCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Remover'),
                     onPressed: () {
                       db.deleteCartProduct(products[index].id);

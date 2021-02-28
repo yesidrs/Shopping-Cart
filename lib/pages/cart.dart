@@ -35,10 +35,7 @@ class _CartPageState extends State<CartPage> {
           builder: (_, state) {
             return (state.isPending && state.cartProducts.length == 0)
                 ? Center(child: Text('Todavia no ha agregado productos'))
-                : (state.isPending && state.isCartProducts)
-                    ? ProductsCardList(state.cartProducts)
-                    //TODO: Show Order
-                    : Center(child: Text('Show Order'));
+                : ProductsCartList(state.cartProducts);
           },
         ));
   }
