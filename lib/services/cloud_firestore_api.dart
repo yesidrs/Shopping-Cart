@@ -11,18 +11,6 @@ class DB {
   List<Products> orderProducts;
   StreamSubscription _streamSubs;
 
-  // Home list products
-  void getProducts() async {
-    _streamSubs = firestore.collection('products').snapshots().listen((onData) {
-      products = onData.docs.map((item) {
-        final id = item.reference.id;
-        final data = item.data();
-        data['id'] = id;
-        return Products.fromMap(data);
-      }).toList();
-    });
-  }
-
   // Cart CRUD
   void getCartProducts() {
     _streamSubs =
