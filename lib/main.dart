@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => new ProductsBloc(firestore: firestore)),
         BlocProvider(create: (_) => new CartBloc(firestore: firestore)),
-        BlocProvider(create: (_) => new OrderBloc()),
+        BlocProvider(create: (_) => new OrderBloc(firestore: firestore)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

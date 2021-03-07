@@ -33,6 +33,9 @@ class CartBloc extends Bloc<CartEvents, CartState> {
     if (event is UpdateQuantityProduct) {
       yield* _mapUpdateQuantityToState(event.productId, event.quantity);
     }
+    if (event is DeleteAllCartProducts) {
+      yield* _mapDeleteAllToState();
+    }
   }
 
   Stream<CartState> _mapGetCartToState() async* {
@@ -50,7 +53,7 @@ class CartBloc extends Bloc<CartEvents, CartState> {
   }
 
   Stream<CartState> _mapAddCartToState(Products product) async* {
-    await _firestore
+     _firestore
         .collection('product_carts')
         .add(product.toJson())
         .then((value) => print('Cart Product Added'))
@@ -60,7 +63,7 @@ class CartBloc extends Bloc<CartEvents, CartState> {
   }
 
   Stream<CartState> _mapDeleteCartToState(String productId) async* {
-    await _firestore
+     _firestore
         .collection('product_carts')
         .doc(productId)
         .delete()
@@ -71,7 +74,7 @@ class CartBloc extends Bloc<CartEvents, CartState> {
   }
 
   Stream<CartState> _mapUpdateQuantityToState(String productId, int quantity) async* {
-    await _firestore
+     _firestore
         .collection('product_carts')
         .doc(productId)
         .update({'quantity': quantity})
@@ -79,6 +82,19 @@ class CartBloc extends Bloc<CartEvents, CartState> {
         .catchError((err) => print('Failed to update quantity: $err'));
 
     yield CartState(pending: true, productList: _products);
+  }
+
+  Stream<CartState> _mapDeleteAllToState() async* {
+    _products.forEach((product) {
+       _firestore
+          .collection('product_carts')
+          .doc(product.id)
+          .delete()
+          .then((value) => print('Cart Product Deleted'))
+          .catchError((err) => print('Failed to remove product: $err'));
+    });
+
+    yield CartState(pending: false, productList: _products);
   }
 
   void cancel() {

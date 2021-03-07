@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/bloc/order/order_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
-import 'package:shopping_cart/services/cloud_firestore_api.dart';
 
-class OrderPage extends StatefulWidget {
-  @override
-  _OrderPageState createState() => _OrderPageState();
-}
 
-class _OrderPageState extends State<OrderPage> {
+
+class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     
     BlocProvider.of<OrderBloc>(context, listen: true)
-        .add(GetOrderProducts(db.orderProducts));
+        .add(GetOrderProducts());
 
     return Scaffold(
       appBar: _customAppBar(),
@@ -23,7 +19,7 @@ class _OrderPageState extends State<OrderPage> {
         builder: ( _ , state) {
           return state.isProducts
               ? OrderProductsList(products: state.products,)
-              : CircularProgressIndicator();
+              : Center(child: CircularProgressIndicator());
         },
       )
     );

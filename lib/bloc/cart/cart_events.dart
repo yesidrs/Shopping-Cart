@@ -23,3 +23,5 @@ class UpdateQuantityProduct extends CartEvents {
 
   UpdateQuantityProduct(this.productId, this.quantity);
 }
+
+class DeleteAllCartProducts extends CartEvents {}

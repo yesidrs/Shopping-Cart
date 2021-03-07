@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
+import 'package:shopping_cart/bloc/order/order_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
 import 'package:shopping_cart/widgets/cards.dart';
-import 'package:shopping_cart/services/cloud_firestore_api.dart';
 
 class ProductsList extends StatelessWidget {
   final List<Products> products;
@@ -23,34 +23,23 @@ class ProductsList extends StatelessWidget {
   }
 }
 
-class ProductsCartList extends StatefulWidget {
+class ProductsCartList extends StatelessWidget {
   final List<Products> products;
 
   const ProductsCartList(this.products);
 
   @override
-  _ProductsCartListState createState() => _ProductsCartListState();
-}
-
-class _ProductsCartListState extends State<ProductsCartList> {
-
-  @override
-    void initState() {
-      db.getOrderProducts();
-      super.initState();
-    }
-
-  @override
   Widget build(BuildContext context) {
+
     return Stack(
       children: [
         Container(
           padding: EdgeInsets.all(10.0),
           child: ListView.builder(
             physics: BouncingScrollPhysics(),
-            itemCount: widget.products.length,
+            itemCount: products.length,
             itemBuilder: (_, index) =>
-                CustomCartCard(products: widget.products, index: index),
+                CustomCartCard(products: products, index: index),
           ),
         ),
         Container(
@@ -69,13 +58,19 @@ class _ProductsCartListState extends State<ProductsCartList> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0)),
                 onPressed: () {
-                  final cartProducts = db.cartProducts;
-                  final orderProducts = db.orderProducts;
+                  BlocProvider.of<OrderBloc>(context)
+                      .add(DeleteAllOrderProducts());
                   
-                  orderProducts.forEach((product) => {db.deleteOrderProducts(product.id)});
-                  cartProducts.forEach((product) => {db.createOrder(product)});
-                  cartProducts.forEach((product) => {BlocProvider.of<CartBloc>(context).add(DeleteCartProduct(product.id))});
+                  
+                  products.forEach((product) {
+                    BlocProvider.of<OrderBloc>(context)
+                        .add(CreateOrderProducts(product));
+                  });
+                 
                   Navigator.popAndPushNamed(context, 'order');
+                  
+                  BlocProvider.of<CartBloc>(context)
+                      .add(DeleteAllCartProducts());
                 },
               ),
             ],
