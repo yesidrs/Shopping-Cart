@@ -30,7 +30,6 @@ class ProductsCartList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         Container(
@@ -50,25 +49,27 @@ class ProductsCartList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              RaisedButton(
+              ElevatedButton(
                 child:
                     Text('Crear Orden', style: TextStyle(color: Colors.white)),
-                color: Colors.redAccent,
-                padding: EdgeInsets.all(16.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0)),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  padding: EdgeInsets.all(16.0)
+                ),
                 onPressed: () {
                   BlocProvider.of<OrderBloc>(context)
                       .add(DeleteAllOrderProducts());
-                  
-                  
+
                   products.forEach((product) {
                     BlocProvider.of<OrderBloc>(context)
                         .add(CreateOrderProducts(product));
                   });
-                 
+
                   Navigator.popAndPushNamed(context, 'order');
-                  
+
                   BlocProvider.of<CartBloc>(context)
                       .add(DeleteAllCartProducts());
                 },
