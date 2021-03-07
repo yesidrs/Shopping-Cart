@@ -3,9 +3,23 @@ part of 'cart_bloc.dart';
 @immutable
 abstract class CartEvents {}
 
-class ProductsAdded extends CartEvents {
-  final bool isPending; 
-  final List<Products> products;
+class GetCartProducts extends CartEvents {}
 
-  ProductsAdded(this.isPending, this.products);
+class AddCartProduct extends CartEvents {
+  final Products product;
+
+  AddCartProduct(this.product);
+}
+
+class DeleteCartProduct extends CartEvents {
+  final String productId;
+
+  DeleteCartProduct(this.productId);
+}
+
+class UpdateQuantityProduct extends CartEvents {
+  final String productId;
+  final int quantity;
+
+  UpdateQuantityProduct(this.productId, this.quantity);
 }

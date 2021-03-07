@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => new ProductsBloc(firestore: firestore)),
-        BlocProvider(create: (_) => new CartBloc()),
+        BlocProvider(create: (_) => new CartBloc(firestore: firestore)),
         BlocProvider(create: (_) => new OrderBloc()),
       ],
       child: MaterialApp(

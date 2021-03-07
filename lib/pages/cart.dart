@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
-import 'package:shopping_cart/services/cloud_firestore_api.dart';
 import 'package:shopping_cart/widgets/product_lists.dart';
 
-class CartPage extends StatefulWidget {
-  @override
-  _CartPageState createState() => _CartPageState();
-}
 
-class _CartPageState extends State<CartPage> {
-  @override
-  void initState() {
-    db.getCartProducts();
-    super.initState();
-  }
+class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isPending = true;
 
     BlocProvider.of<CartBloc>(context, listen: true)
-        .add(ProductsAdded(isPending, db.cartProducts));
+        .add(GetCartProducts());
 
     return Scaffold(
         appBar: AppBar(

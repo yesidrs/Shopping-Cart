@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
-import 'package:shopping_cart/services/cloud_firestore_api.dart';
 
 class CustomCard extends StatelessWidget {
   final List<Products> products;
@@ -55,7 +56,10 @@ class CustomCard extends StatelessWidget {
               ),
               IconButton(
                 icon: FaIcon(FontAwesomeIcons.plus, color: Colors.redAccent),
-                onPressed: () => {db.addCartProducts(products[index])},
+                onPressed: () => {
+                  BlocProvider.of<CartBloc>(context)
+                      .add(AddCartProduct(products[index]))
+                },
               )
             ],
           ),
@@ -127,10 +131,13 @@ class CustomCartCard extends StatelessWidget {
                         iconSize: 15.0,
                         onPressed: () {
                           if (products[index].quantity <= 1) {
-                            db.deleteCartProduct(products[index].id);
+                            BlocProvider.of<CartBloc>(context)
+                                .add(DeleteCartProduct(products[index].id));
                           } else {
                             int _quantity = products[index].quantity - 1;
-                            db.updateQuantity(products[index].id, _quantity);
+                            BlocProvider.of<CartBloc>(context).add(
+                                UpdateQuantityProduct(
+                                    products[index].id, _quantity));
                           }
                         },
                       ),
@@ -141,7 +148,9 @@ class CustomCartCard extends StatelessWidget {
                         iconSize: 15.0,
                         onPressed: () {
                           int _quantity = products[index].quantity + 1;
-                          db.updateQuantity(products[index].id, _quantity);
+                          BlocProvider.of<CartBloc>(context).add(
+                              UpdateQuantityProduct(
+                                  products[index].id, _quantity));
                         },
                       ),
                     ],
@@ -149,7 +158,8 @@ class CustomCartCard extends StatelessWidget {
                   ElevatedButton(
                     child: Text('Remover'),
                     onPressed: () {
-                      db.deleteCartProduct(products[index].id);
+                      BlocProvider.of<CartBloc>(context)
+                          .add(DeleteCartProduct(products[index].id));
                     },
                   )
                 ],

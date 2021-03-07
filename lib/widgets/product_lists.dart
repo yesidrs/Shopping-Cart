@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_cart/bloc/cart/cart_bloc.dart';
 import 'package:shopping_cart/models/products.dart';
 import 'package:shopping_cart/widgets/cards.dart';
 import 'package:shopping_cart/services/cloud_firestore_api.dart';
@@ -72,7 +74,7 @@ class _ProductsCartListState extends State<ProductsCartList> {
                   
                   orderProducts.forEach((product) => {db.deleteOrderProducts(product.id)});
                   cartProducts.forEach((product) => {db.createOrder(product)});
-                  cartProducts.forEach((product) => {db.deleteCartProduct(product.id)});
+                  cartProducts.forEach((product) => {BlocProvider.of<CartBloc>(context).add(DeleteCartProduct(product.id))});
                   Navigator.popAndPushNamed(context, 'order');
                 },
               ),
